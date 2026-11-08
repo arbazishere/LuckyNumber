@@ -1,0 +1,75 @@
+using ArbazAminKhan.Frequentlys.Components;
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Input_Manager : MonoBehaviour
+{
+    [SerializeField] InputActionAsset _inputActions;
+    InputAction _moveAction, _lookAction, _jumpAction, _sprintAction;
+
+    Vector2 _move;
+    Vector2 _look;
+    bool _jump;
+    bool _sprint;
+
+    public Vector2 Move => _move;
+    public Vector2 Look => _look;
+    public bool Jump => _jump;
+    public bool Sprint => _sprint;
+
+    readonly string _playerActionMapId = "Player";
+
+    readonly string _moveActionId = "Move";
+    readonly string _lookActionId = "Look";
+    readonly string _jumpActionId = "Jump";
+    readonly string _sprintActionId = "Sprint";
+
+    public Action OnJumpedBegan;
+
+    public static Input_Manager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        _moveAction = InputSystem.actions.FindAction(_moveActionId);
+        _lookAction = InputSystem.actions.FindAction(_lookActionId);
+        _jumpAction = InputSystem.actions.FindAction(_jumpActionId);
+        _sprintAction = InputSystem.actions.FindAction(_sprintActionId);
+
+        Frequently_Manager.OnUpdate += UpdateBehaviour;
+    }
+
+    void OnEnable()
+    {
+        _inputActions.FindActionMap(_playerActionMapId).Enable();
+    }
+
+    void UpdateBehaviour()
+    {
+        _move = _moveAction.ReadValue<Vector2>();
+        _look = _lookAction.ReadValue<Vector2>();
+
+        _sprint = _sprintAction.IsPressed();
+        _jump = _jumpAction.IsPressed();
+
+        if (_jumpAction.WasPressedThisFrame()) OnJumpedBegan?.Invoke();
+    }
+
+    void OnDisable()
+    {
+        _inputActions.FindActionMap(_playerActionMapId).Disable();
+    }
+
+    void OnDestroy()
+    {
+        Frequently_Manager.OnUpdate -= UpdateBehaviour;
+    }
+}
