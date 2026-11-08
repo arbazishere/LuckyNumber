@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_Triplanar 2
-  m_Shader: {fileID: -6465566751694194690, guid: cce3e591b20f4db4d8456c40bf472f66, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 3022dcaadde37d64c8a4a3b4f2d03b40, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -57,6 +57,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Smoothness: 0
     m_Colors:
     - _Base_Color: {r: 0.5019608, g: 0.3764706, b: 0.1254902, a: 1}
     - _Base_Tile: {r: 1, g: 1, b: 1, a: 0}
