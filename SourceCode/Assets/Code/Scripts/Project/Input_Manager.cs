@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Input_Manager : MonoBehaviour
 {
     [SerializeField] InputActionAsset _inputActions;
-    InputAction _moveAction, _lookAction, _jumpAction, _sprintAction;
+    internal InputAction _moveAction, _lookAction, _jumpAction, _sprintAction, _interactionAction;
 
     Vector2 _move;
     Vector2 _look;
@@ -24,6 +24,7 @@ public class Input_Manager : MonoBehaviour
     readonly string _lookActionId = "Look";
     readonly string _jumpActionId = "Jump";
     readonly string _sprintActionId = "Sprint";
+    readonly string _interactionActionId = "Interact";
 
     public Action OnJumpedBegan;
 
@@ -43,6 +44,7 @@ public class Input_Manager : MonoBehaviour
         _lookAction = InputSystem.actions.FindAction(_lookActionId);
         _jumpAction = InputSystem.actions.FindAction(_jumpActionId);
         _sprintAction = InputSystem.actions.FindAction(_sprintActionId);
+        _interactionAction = InputSystem.actions.FindAction(_interactionActionId);
 
         Frequently_Manager.OnUpdate += UpdateBehaviour;
     }
