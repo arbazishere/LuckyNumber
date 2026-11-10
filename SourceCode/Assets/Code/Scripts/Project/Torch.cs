@@ -1,5 +1,6 @@
 using ArbazAminKhan.Cameras.Components;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
@@ -14,12 +15,11 @@ public class Torch : MonoBehaviour
     [SerializeField] Sprite _onSprite, _offSprite;
 
     [SerializeField] internal Canvas _canvas;
+    [SerializeField] internal TMP_Text _battaryText;
 
     [SerializeField] Image _batteryPowerImage;
 
     [SerializeField] float _speed = 1 / 256f;
-
-    [SerializeField] AudioSource _click;
 
     bool _isOn = true;
 
@@ -36,7 +36,7 @@ public class Torch : MonoBehaviour
 
     public void GrabTorch()
     {
-        Audio_Manager.Instance._click.Play();
+        Audio_Manager.Instance._grab.Play();
 
         _canvas.gameObject.SetActive(true);
         _interactionButton.gameObject.SetActive(false);
@@ -55,7 +55,18 @@ public class Torch : MonoBehaviour
 
     private void Update()
     {
-        if (_isOn && _batteryPowerImage.fillAmount > 0) _batteryPowerImage.fillAmount -= _speed * Time.deltaTime;
+        if (_isOn && _batteryPowerImage.fillAmount > 0)
+        {
+            _batteryPowerImage.fillAmount -= _speed * Time.deltaTime;
+            var fill = _batteryPowerImage.fillAmount;
+
+            var color = Color.Lerp(Color.red, Color.green, (fill * 1.25f) - .25f);
+            _batteryPowerImage.color = color;
+
+            string hexColor = ColorUtility.ToHtmlStringRGB(color);
+            _battaryText.text = $"Torch <color=#{hexColor}><b>[{fill * 100:F0}%]</b></color>";
+        }
+
         else LightBehaviour(false);
     }
 

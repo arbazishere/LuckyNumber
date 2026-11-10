@@ -5,7 +5,7 @@ public partial class Audio_Manager : MonoBehaviour
 {
     [AutoStaticsCleanup] public static Audio_Manager Instance { get; private set; }
 
-    [SerializeField] internal AudioSource _click;
+    [SerializeField] internal AudioSource _click, _grab;
 
     void Awake()
     {
