@@ -29,7 +29,7 @@ namespace ArbazAminKhan.Inputs.Datas
         internal Vector2 delta => Touch_Presets.Delta(this);
         internal Vector2 delta_ScreenModified => delta / Mathf.Min(Screen.width, Screen.height);
 
-        internal bool IsDown => _touchControl != null ? (_touchControl.press.isPressed || _touchControl.press.wasPressedThisFrame) : Mouse.current != null && (Mouse.current.leftButton.isPressed || Mouse.current.leftButton.wasPressedThisFrame);
+        internal bool IsDown => _touchControl != null && _touchControl.device.added ? (_touchControl.press.isPressed || _touchControl.press.wasPressedThisFrame) : Mouse.current != null && (Mouse.current.leftButton.isPressed || Mouse.current.leftButton.wasPressedThisFrame);
     }
 
     [System.Serializable]

@@ -65,7 +65,7 @@ namespace ArbazAminKhan.Inputs.Components
         void RecatchTouchData()
         {
             var touchscreen = Touchscreen.current;
-            if (touchscreen == null)
+            if (touchscreen == null || !touchscreen.added)
             {
                 _touchesData = Array.Empty<Touch_Data>();
                 return;
@@ -102,6 +102,8 @@ namespace ArbazAminKhan.Inputs.Components
 
             foreach (var data in _touchesData)
             {
+                if (data._touchControl == null || !data._touchControl.device.added) continue;
+
                 if (data._touchControl.press.wasPressedThisFrame) DownBehaviour(data);
                 if (data._touchControl.press.isPressed) MoveBehaviour(data);
                 if (data._touchControl.press.wasReleasedThisFrame) UpBehaviour(data);
