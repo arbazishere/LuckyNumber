@@ -36,6 +36,7 @@ namespace ArbazAminKhan.Inputs.Datas
     public class RayData_Touch_Data
     {
         internal bool _hasRaycastData;
+        internal bool _hasUIInteraction;
         internal RaycastHit _data;
 
         internal System.Collections.Generic.List<VisualElement> _visualElements = new();

@@ -1,4 +1,5 @@
 using ArbazAminKhan.Frequentlys.Components;
+using ArbazAminKhan.Inputs.Components;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -57,12 +58,22 @@ public class Input_Manager : MonoBehaviour
     void UpdateBehaviour()
     {
         _move = _moveAction.ReadValue<Vector2>();
-        _look = _lookAction.ReadValue<Vector2>();
+        _look = GetTouchLook();
 
         _sprint = _sprintAction.IsPressed();
         _jump = _jumpAction.IsPressed();
 
         if (_jumpAction.WasPressedThisFrame()) OnJumpedBegan?.Invoke();
+    }
+
+    // Camera look comes from Touch_Manager: only presses that did not start on UI rotate the camera.
+    static Vector2 GetTouchLook()
+    {
+        var datas = Touch_Manager._noneUI_TouchsDown_Data;
+        for (int i = 0; i < datas.Length; i++)
+            if (datas[i] != null && datas[i].IsDown) return datas[i].delta;
+
+        return Vector2.zero;
     }
 
     void OnDisable()

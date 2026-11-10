@@ -124,6 +124,7 @@ namespace ArbazAminKhan.Inputs.Components
         {
             data._hitData._hasRaycastData = Physics.Raycast(Camera.main.ScreenPointToRay(data.position), out data._hitData._data);
             data._hitData._visualElements = UIToolkit_Inputs.GetUIElements(data.position);
+            data._hitData._hasUIInteraction = HasUIInteraction(data);
 
             if (!_datas.Contains(data)) _datas.Add(data);
 
@@ -132,6 +133,19 @@ namespace ArbazAminKhan.Inputs.Components
 
             OnPreDown?.Invoke(data);
             OnDown?.Invoke(data);
+        }
+
+        // True when this press began on a uGUI (Canvas) object, so it belongs to that UI and not to the game world.
+        // Evaluated once at press start and kept until release, even if the pointer moves off the object.
+        static bool HasUIInteraction(Touch_Data data)
+        {
+            var es = UnityEngine.EventSystems.EventSystem.current;
+            if (es == null) return false;
+
+            if (data._touchControl != null && data._touchControl.device.added)
+                return es.IsPointerOverGameObject(data._touchControl.touchId.ReadValue());
+
+            return es.IsPointerOverGameObject();
         }
 
         void MoveBehaviour(Touch_Data data)
@@ -149,7 +163,7 @@ namespace ArbazAminKhan.Inputs.Components
             OnUp?.Invoke(data);
         }
 
-        void RefreshAndSet_NoneRayTouchData() => _noneUI_TouchsDown_Data = _datas.FindAll(d => d._hitData._visualElements.Count == 0).ToArray();
+        void RefreshAndSet_NoneRayTouchData() => _noneUI_TouchsDown_Data = _datas.FindAll(d => d._hitData._visualElements.Count == 0 && !d._hitData._hasUIInteraction).ToArray();
 
         void RemoveNoneUseTouch_DownBehaviour()
         {
