@@ -9820,7 +9820,7 @@ GameObject:
   - component: {fileID: 1804509391}
   - component: {fileID: 1804509390}
   m_Layer: 5
-  m_Name: Torch_Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12008,12 +12008,12 @@ GameObject:
   - component: {fileID: 2076656228}
   - component: {fileID: 2076656227}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Torch_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2076656227
 MonoBehaviour:
   m_ObjectHideFlags: 0
