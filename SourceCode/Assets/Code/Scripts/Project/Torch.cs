@@ -1,4 +1,5 @@
 using ArbazAminKhan.Cameras.Components;
+using ArbazAminKhan.Inputs.Components;
 using System;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class Torch : MonoBehaviour
     [SerializeField] internal TMP_Text _battaryText;
 
     [SerializeField] Image _batteryPowerImage;
+    [SerializeField] internal Component_Clicker _hardColliderClicker;
+    [SerializeField] internal BoxCollider _hardCollider;
 
     [SerializeField] float _speed = 1 / 256f;
 
@@ -27,6 +30,12 @@ public class Torch : MonoBehaviour
     {
         _button.onClick.AddListener(ButtonClicked);
         _interactionButton.onClick.AddListener(InteractionButtonClicked);
+        _hardColliderClicker.clicked += HardColliderClicked;
+    }
+
+    private void HardColliderClicked()
+    {
+        GrabTorch();
     }
 
     private void InteractionButtonClicked()
@@ -45,12 +54,15 @@ public class Torch : MonoBehaviour
         transform.SetLocalPositionAndRotation(new(.0625f, -.125f, .25f), default);
 
         transform.GetComponent<Collider>().enabled = false;
+        _hardCollider.enabled = false;
     }
 
     private void OnDestroy()
     {
         _button.onClick.RemoveListener(ButtonClicked);
         _interactionButton.onClick.RemoveListener(InteractionButtonClicked);
+
+        _hardColliderClicker.clicked -= HardColliderClicked;
     }
 
     private void Update()

@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == _objectKey && other.TryGetComponent(out _torch))
         {
             _torch._interactionButton.gameObject.SetActive(true);
+            _torch._hardCollider.enabled = true;
         }
     }
 
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == _objectKey && other.TryGetComponent(out _torch))
         {
             _torch._interactionButton.gameObject.SetActive(false);
+            _torch._hardCollider.enabled = false;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ArbazAminKhan.Inputs.Components
 
         void OnMouseUpAsButton()
         {
+            Debug.Log("Call");
             if (!_interactable) return;
             if (UIToolkit_Inputs.IsPointerOverElement()) return;
 
